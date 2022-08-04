@@ -1,4 +1,4 @@
-package Codigo;
+package analizador;
 
 import java.io.File;
 import java.io.FileNotFoundException;
