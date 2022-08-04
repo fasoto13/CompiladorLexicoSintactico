@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AnalizadorJava.iml" filepath="$PROJECT_DIR$/AnalizadorJava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CompiladorLexicoSintactico.iml" filepath="$PROJECT_DIR$/CompiladorLexicoSintactico.iml" />
     </modules>
   </component>
 </project>
