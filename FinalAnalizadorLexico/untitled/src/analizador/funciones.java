@@ -1,6 +1,6 @@
 package analizador;
 
-public class Funciones {
+public class funciones {
 
     public static String[] funcionQuitarEspacios(String b) {
 

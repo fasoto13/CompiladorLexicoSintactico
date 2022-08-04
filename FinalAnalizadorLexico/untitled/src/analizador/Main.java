@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
-import static analizador.Funciones.*;
+import static analizador.funciones;
 
 public class Main {
 

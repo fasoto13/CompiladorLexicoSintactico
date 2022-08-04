@@ -1,10 +1,20 @@
 package sintactico;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import static analizador.metodos.RecorrerEspaciosBn;
+import static analizador.metodos.leerArchivo;
 
 public class Main {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException {
+        Scanner sr = new Scanner(System.in);
         String [][] accion = new String[36][3]; // Tabla Accion
         String [][] ir_A = new String[9][3]; // Tabla ir_A
 
@@ -63,23 +73,34 @@ public class Main {
         ir_A[8][0] = "7"; ir_A[8][1] = "F"; ir_A[8][2] = "10";
 
         Stack pila = new Stack();
+        int e = 0;
+        int s = 0;
+        String text = sr.nextLine();
+        String lec_archivo = leerArchivo("analizador\\exe.txt");
+        char[] stri = text.toCharArray();
+        if (text == "") {
+            text = "_";
+        }
+        String[] caracter = RecorrerEspaciosBn(stri, lec_archivo);
+        while (s != caracter.length) {
+            pila.push(e);
+            for (int i = 0; i < accion.length; i++) {
+                for (int j = 0; j < accion[i].length; j++) {
+                    if (accion[i][j].equals(e) && accion[i][j].equals(s)){
+                        e = Integer.parseInt(String.valueOf(accion[i][j+1]));
+                        pila.push(e);
+                        s++;
+                    } else {
+                        if (accion[i][j].equals(e) && accion[i][j].equals(s)){
+                            
+                        }
+                    }
+                }
+            }
 
-        pila.push(1);
-        pila.push(2);
-        pila.push(3);
-        pila.push(4);
-        pila.push(5);
-        pila.push(6);
-        pila.push(7);
-        pila.push(8);
+        }
 
 
-        pila.pop();
-        pila.pop();
-        pila.pop();
-
-
-        pila.mostrar();
 
 
 
@@ -107,5 +128,27 @@ public class Main {
             System.out.println();
         }
 
+    }
+    public static String leerArchivo (String archivo) throws FileNotFoundException, IOException {
+        Path path = Paths.get(archivo);
+        File doc =new File(archivo);
+        Scanner obj=new Scanner(doc);
+        String content="";
+        try {
+            content = Files.readString(path);
+            System.out.println(content);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        while (obj.hasNextLine()){
+            System.out.println(obj.nextLine());
+        }
+        return content;
+    }
+    public static String[] RecorrerEspaciosBn(char[] a,String b) {
+        String palabra = "";
+        String[] espacio = b.split(" ");
+        return espacio;
     }
 }

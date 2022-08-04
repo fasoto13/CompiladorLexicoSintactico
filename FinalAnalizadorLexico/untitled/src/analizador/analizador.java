@@ -4,7 +4,8 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import static Codigo.metodos.*;
+import static analizador.metodos.*;
+
 
 public class analizador {
     public static void main(String[] args) throws IOException {
