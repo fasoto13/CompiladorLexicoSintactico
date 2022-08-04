@@ -1,4 +1,4 @@
-package Codigo;
+package analizador;
 
 import java.util.Scanner;
 import java.io.File;
