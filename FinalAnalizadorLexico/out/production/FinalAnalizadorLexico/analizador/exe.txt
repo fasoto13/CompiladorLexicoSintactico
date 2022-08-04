@@ -1,0 +1,3 @@
+int numero1 ** 45 ;
+int numero2 ** 34 ;
+int numero3 ** 50 ;

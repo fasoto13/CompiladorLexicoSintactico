@@ -145,6 +145,20 @@ public class Main {
         ir_A[8][1] = "F";
         ir_A[8][2] = "10"; // regla 4
 
+        Stack pila = new Stack();
+
+        pila.push(1);
+        pila.push(2);
+        pila.push(3);
+        pila.push(4);
+        pila.push(5);
+        pila.push(6);
+        pila.push(7);
+        pila.push(8);
+
+        pila.pop();
+        pila.mostrar();
+
 
 
 

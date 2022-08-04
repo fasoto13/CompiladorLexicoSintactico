@@ -1,4 +1,4 @@
-package Codigo;
+package analizador;
 
 import java.util.Scanner;
 import java.io.File;
@@ -15,20 +15,18 @@ public class analizador {
         int estado = 1;
         int c = 0;
         String text = sr.nextLine();
-        String lec_archivo = leerArchivo("C:\\Users\\ALIENWARE\\OneDrive - Universidad Técnica Particular de Loja - UTPL\\" +
-                "SISTEMAS\\6to CICLO TECNICA\\TEORIA DE AUTOMATAS Y COMPILADORES\\Trabajo_PrimerBimestre_Analizador\\" +
-                "AnalizadorJava\\src\\data\\exe.txt");
+        String lec_archivo = leerArchivo("C:\\Users\\sotof\\Desktop\\CompiladorLexicoSintactico\\FinalAnalizadorLexico" +
+                "\\untitled\\src\\analizador\\exe.txt");
         char[] stri = text.toCharArray();
         if (text == "") {
             text = "_";
         }
         String[] caracter = RecorrerEspaciosBn(stri, lec_archivo);
         while (c != caracter.length) {
-            System.out.println("====================");
-            System.out.println(c);
-            System.out.println("====================");
+
             switch (estado) {
                 case 1:
+
                     if (buscarAritmetico(caracter[c])) {
                         estado = 2;
                     }
