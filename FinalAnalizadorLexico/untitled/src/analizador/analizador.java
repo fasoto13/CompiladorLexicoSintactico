@@ -1,14 +1,12 @@
 package analizador;
 
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import static analizador.metodos.*;
 
 
 public class analizador {
-    public static void main(String[] args) throws IOException {
+    public static String[] main(String[] args) throws IOException {
         Scanner sr = new Scanner(System.in);
         System.out.println("===============Analizador lexico=============");
         System.out.println("             Bryan Rodriguez 1Bim            ");
@@ -110,6 +108,8 @@ public class analizador {
                     break;
 
             }
+
         }
+        return caracter;
     }
 }

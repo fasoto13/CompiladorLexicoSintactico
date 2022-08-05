@@ -20,7 +20,7 @@ public class Metodos {
 
     }
 
-    public static String metodoAccion (int estado, String token){
+    public static String metodoAccion (String estado, String token){
 
         String valor_pila = "";
 
@@ -43,7 +43,7 @@ public class Metodos {
 
     }
 
-    public static String metodoIrA (int estado, String token){
+    public static String metodoIrA (String estado, String token){
 
         String nro_veces = "";
 
