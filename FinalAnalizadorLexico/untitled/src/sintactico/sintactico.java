@@ -11,7 +11,7 @@ import java.util.Scanner;
 import static analizador.metodos.RecorrerEspaciosBn;
 import static analizador.metodos.leerArchivo;
 
-public class Main {
+public class sintactico {
 
     public static void main(String[] args) throws IOException {
         Scanner sr = new Scanner(System.in);
@@ -74,6 +74,8 @@ public class Main {
 
         Stack pila = new Stack();
         int e = 0;
+        String r = "";
+        String fin = "";
         int s = 0;
         String text = sr.nextLine();
         String lec_archivo = leerArchivo("analizador\\exe.txt");
@@ -92,18 +94,49 @@ public class Main {
                         s++;
                     } else {
                         if (accion[i][j].equals(e) && accion[i][j].equals(s)){
-                            
+                            r = accion[i][j+1];
+                            if(r=="R1"){
+                                pila.pop();
+                                pila.pop();
+                                pila.pop();
+                            } else {
+                                if(r=="R2"){
+                                    pila.pop();
+                                }else{
+                                    if(r=="R3"){
+                                        pila.pop();
+                                        pila.pop();
+                                        pila.pop();
+                                    }else{
+                                        if(r=="R4"){
+                                            pila.pop();
+                                        }else{
+                                            if(r=="R5"){
+                                                pila.pop();
+                                                pila.pop();
+                                                pila.pop();
+                                            }else{
+                                                if(r=="R6"){
+                                                    pila.pop();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }else{
+                            if (accion[i][j].equals(e) && accion[i][j].equals(s)){
+                                fin = accion[i][j+1];
+                                if(fin == "acc"){
+                                    System.out.println("Analisis sintactico terminado");
+                                }
+                            }
                         }
                     }
                 }
             }
 
         }
-
-
-
-
-
 
         //Mostrar por pantalla los valores que contiene la matriz
 
