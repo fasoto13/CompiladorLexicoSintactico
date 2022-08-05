@@ -4,15 +4,13 @@ public class sdasda {
 
     public static void main(String[] args) {
 
-        String sCadena = "Esto es una cadena de texto";
+        for (int i = 0; i < 8;) {
 
-        char[] aCaracteres = sCadena.toCharArray();
+            System.out.println(i);
 
-        for (int x=0;x<aCaracteres.length;x++){
+            i++;
 
-            System.out.println("[" + x + "] " + aCaracteres[x]);
         }
-
 
 
 

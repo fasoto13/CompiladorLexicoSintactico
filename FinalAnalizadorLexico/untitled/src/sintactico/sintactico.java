@@ -1,6 +1,7 @@
 package sintactico;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -15,9 +16,6 @@ public class sintactico {
         Scanner sc = new Scanner(System.in);
         String[][] accion = new String[36][3]; // Tabla Accion
         String[][] ir_A = new String[9][3]; // Tabla ir_A
-        int c = 0;
-        String estado = "0";
-        String valor_pila = "";
 
         // R1 -> E -> E + T
         // R2 -> E -> T
@@ -163,6 +161,10 @@ public class sintactico {
         ir_A[8][1] = "F";
         ir_A[8][2] = "10";
 
+        boolean stop = true;
+        String estado = "0";
+        String valor_pila = "";
+
         System.out.println("===============Analizador Sintactico=============");
         System.out.println("          Bryan Rodriguez - Fabian Soto          ");
         System.out.println("-------------------------------------------------");
@@ -170,7 +172,11 @@ public class sintactico {
 
         Metodos m = new Metodos(accion, ir_A);
 
-        String lec_archivo = m.leerArchivo("C:\\Users\\ALIENWARE\\Desktop\\CompiladorLexicoSintactico\\FinalAnalizadorLexico\\untitled\\src\\analizador\\exe.txt");
+        String lec_archivo = m.leerArchivo("C:\\Users\\sotof\\Desktop\\CompiladorLexicoSintactico" +
+                "\\FinalAnalizadorLexico\\untitled\\src\\analizador\\exe.txt");
+
+        int c = 0;
+
         char[] cadena_token = text.toCharArray(); //Se tranformar a un ARRAY de CARACTERES
 
         String[] lista_caracteres = m.recorrerEspaciosBn(cadena_token, lec_archivo);
@@ -185,122 +191,462 @@ public class sintactico {
         System.out.println(lista_caracteres.length);
         System.out.println("****************************************");
 
-        do{
-            for (int i = 0; i < accion.length; i++) {
-                for (int j = 0; j < accion[i].length; j++) {
-//                    System.out.println(accion[i][0]);
-//                    System.out.println(accion[i][1]);
-//                    System.out.println(accion[i][2]);
-                    if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c])) {
-                        valor_pila = accion[i][2];
-                        pila.push(valor_pila);
-                        estado = pila.peek();
-                        System.out.println("Condicional1");
+        while (stop) {
+
+            for (int z = 0; z < lista_caracteres.length; ) {
+
+                for (int i = 0; i < accion.length; i++) {
+
+                    for (int j = 0; j < accion[i].length; j++) {
+
+                        if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[z])) {
+
+                            System.out.println("Posicion Cadena = " + z);
+                            System.out.println("CADENA = " + lista_caracteres[z]);
+                            System.out.println("ESTADO = " + estado);
+                            System.out.println("TOKEN = " + accion[i][1]);
+                            System.out.println("SALIDA = " + accion[i][2]);
+
+                            valor_pila = accion[i][2];
+
+                            pila.push(valor_pila);
+
+                            estado = pila.peek();
+
+                            System.out.println("ESTADO = " + estado);
+                            pila.mostrar();
+                            z++;
+                        }
+                        String estado_entrada = pila.peek();
+
+                        switch (estado_entrada) {
+
+                            case "R1":
+
+                                z--;
+
+                                pila.pop();
+                                pila.pop();
+                                pila.pop();
+                                pila.pop();
+
+                                System.out.println("======================================================");
+
+                                pila.mostrar();
+
+                                System.out.println("Posicion Cadena = " + z);
+                                System.out.println("CADENA = " + lista_caracteres[z]);
+                                System.out.println("ESTADO = " + pila.peek());
+
+                                System.out.println("REGLA 1");
+
+                                String estado_nuevo = pila.peek();
+
+                                for (int k = 0; k < ir_A.length; k++) {
+
+                                    for (int l = 0; l < ir_A[k].length; l++) {
+
+                                        if (ir_A[k][0].equals(estado_nuevo) && ir_A[k][1].equals("E")) {
+
+                                            System.out.println("Posicion Cadena = " + z);
+                                            System.out.println("CADENA = " + lista_caracteres[z]);
+                                            System.out.println("ESTADO = " + estado_nuevo);
+                                            System.out.println("ir_A = " + ir_A[k][1]);
+                                            System.out.println("SALIDA = " + ir_A[k][2]);
+
+                                            valor_pila = ir_A[k][2];
+
+                                            pila.push(valor_pila);
+
+                                            estado = pila.peek();
+
+                                            System.out.println("ESTADO = " + estado);
+                                            pila.mostrar();
+
+                                            break;
+
+                                        }
+                                    }
+                                }
+                                break;
+
+                            case "R2":
+
+                                z--;
+
+                                pila.pop();
+                                pila.pop();
+
+                                System.out.println("======================================================");
+
+                                pila.mostrar();
+
+                                System.out.println("Posicion Cadena = " + z);
+                                System.out.println("CADENA = " + lista_caracteres[z]);
+                                System.out.println("ESTADO = " + pila.peek());
+
+                                System.out.println("REGLA 2");
+
+                                estado_nuevo = pila.peek();
+
+                                for (int k = 0; k < ir_A.length; k++) {
+
+                                    for (int l = 0; l < ir_A[k].length; l++) {
+
+                                        if (ir_A[k][0].equals(estado_nuevo) && ir_A[k][1].equals("E")) {
+
+                                            System.out.println("Posicion Cadena = " + z);
+                                            System.out.println("CADENA = " + lista_caracteres[z]);
+                                            System.out.println("ESTADO = " + estado_nuevo);
+                                            System.out.println("ir_A = " + ir_A[k][1]);
+                                            System.out.println("SALIDA = " + ir_A[k][2]);
+
+                                            valor_pila = ir_A[k][2];
+
+                                            pila.push(valor_pila);
+
+                                            estado = pila.peek();
+
+                                            System.out.println("ESTADO = " + estado);
+                                            pila.mostrar();
+
+                                            break;
+
+                                        }
+                                    }
+                                }
+
+                                break;
+
+                            case "R3":
+
+                                z--;
+
+                                pila.pop();
+                                pila.pop();
+                                pila.pop();
+                                pila.pop();
+
+                                System.out.println("======================================================");
+
+                                pila.mostrar();
+
+                                System.out.println("Posicion Cadena = " + z);
+                                System.out.println("CADENA = " + lista_caracteres[z]);
+                                System.out.println("ESTADO = " + pila.peek());
+
+                                System.out.println("REGLA 2");
+
+                                estado_nuevo = pila.peek();
+
+                                for (int k = 0; k < ir_A.length; k++) {
+
+                                    for (int l = 0; l < ir_A[k].length; l++) {
+
+                                        if (ir_A[k][0].equals(estado_nuevo) && ir_A[k][1].equals("T")) {
+
+                                            System.out.println("Posicion Cadena = " + z);
+                                            System.out.println("CADENA = " + lista_caracteres[z]);
+                                            System.out.println("ESTADO = " + estado_nuevo);
+                                            System.out.println("ir_A = " + ir_A[k][1]);
+                                            System.out.println("SALIDA = " + ir_A[k][2]);
+
+                                            valor_pila = ir_A[k][2];
+
+                                            pila.push(valor_pila);
+
+                                            estado = pila.peek();
+
+                                            System.out.println("ESTADO = " + estado);
+                                            pila.mostrar();
+
+                                            break;
+
+                                        }
+                                    }
+                                }
+
+
+                                break;
+
+                            case "R4":
+
+                                z--;
+
+
+                                pila.pop();
+                                pila.pop();
+
+                                System.out.println("======================================================");
+
+                                pila.mostrar();
+
+                                System.out.println("Posicion Cadena = " + z);
+                                System.out.println("CADENA = " + lista_caracteres[z]);
+                                System.out.println("ESTADO = " + pila.peek());
+
+                                System.out.println("REGLA 4");
+
+                                estado_nuevo = pila.peek();
+
+                                System.out.println(estado_nuevo);
+
+                                for (int k = 0; k < ir_A.length; k++) {
+
+                                    for (int l = 0; l < ir_A[k].length; l++) {
+
+                                        if (ir_A[k][0].equals(estado_nuevo) && ir_A[k][1].equals("T")) {
+
+                                            System.out.println("Posicion Cadena = " + z);
+                                            System.out.println("CADENA = " + lista_caracteres[z]);
+                                            System.out.println("ESTADO = " + estado_nuevo);
+                                            System.out.println("ir_A = " + ir_A[k][1]);
+                                            System.out.println("SALIDA = " + ir_A[k][2]);
+
+                                            valor_pila = ir_A[k][2];
+
+                                            pila.push(valor_pila);
+
+                                            estado = pila.peek();
+
+                                            System.out.println("ESTADO = " + estado);
+                                            pila.mostrar();
+
+                                            break;
+
+                                        }
+                                    }
+                                }
+
+                                break;
+
+                            case "R5":
+
+                                z--;
+
+                                pila.pop();
+                                pila.pop();
+                                pila.pop();
+                                pila.pop();
+
+                                System.out.println("======================================================");
+
+                                pila.mostrar();
+
+                                System.out.println("Posicion Cadena = " + z);
+                                System.out.println("CADENA = " + lista_caracteres[z]);
+                                System.out.println("ESTADO = " + pila.peek());
+
+                                System.out.println("REGLA 5");
+
+                                estado_nuevo = pila.peek();
+
+                                for (int k = 0; k < ir_A.length; k++) {
+
+                                    for (int l = 0; l < ir_A[k].length; l++) {
+
+                                        if (ir_A[k][0].equals(estado_nuevo) && ir_A[k][1].equals("F")) {
+
+                                            System.out.println("Posicion Cadena = " + z);
+                                            System.out.println("CADENA = " + lista_caracteres[z]);
+                                            System.out.println("ESTADO = " + estado_nuevo);
+                                            System.out.println("ir_A = " + ir_A[k][1]);
+                                            System.out.println("SALIDA = " + ir_A[k][2]);
+
+                                            valor_pila = ir_A[k][2];
+
+                                            pila.push(valor_pila);
+
+                                            estado = pila.peek();
+
+                                            System.out.println("ESTADO = " + estado);
+                                            pila.mostrar();
+
+                                            break;
+
+                                        }
+                                    }
+                                }
+
+
+                                break;
+
+                            case "R6":
+
+                                z--;
+
+                                pila.pop();
+                                pila.pop();
+
+                                System.out.println("REGLA 6");
+
+                                estado_nuevo = pila.peek();
+
+                                for (int k = 0; k < ir_A.length; k++) {
+
+                                    for (int l = 0; l < ir_A[k].length; l++) {
+
+                                        if (ir_A[k][0].equals(estado_nuevo) && ir_A[k][1].equals("F")) {
+
+                                            System.out.println("Posicion Cadena = " + z);
+                                            System.out.println("CADENA = " + lista_caracteres[z]);
+                                            System.out.println("ESTADO = " + estado_nuevo);
+                                            System.out.println("ir_A = " + ir_A[k][1]);
+                                            System.out.println("SALIDA = " + ir_A[k][2]);
+
+                                            valor_pila = ir_A[k][2];
+
+                                            pila.push(valor_pila);
+
+                                            estado = pila.peek();
+
+                                            System.out.println("ESTADO = " + estado);
+
+                                            break;
+
+                                        }
+                                    }
+                                }
+                                break;
+
+                        }
+
+                        if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("acc")) {
+
+                            System.out.println("El analisis sintactico ha sido completado");
+
+                            stop = false;
+                            break;
+
+                        }
                     }
                 }
+
             }
-           c++;
         }
-        while (c != lista_caracteres.length);
+    }
+}
 
-//        while (c != lista_caracteres.length) {
+
+//        while (stop == true) {
+//
+//            int c = 0;
+//
 //            for (int i = 0; i < accion.length; i++) {
+//
 //                for (int j = 0; j < accion[i].length; j++) {
-//                    if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c])) {
-//                        valor_pila = accion[i][2];
-//                        pila.push(valor_pila);
-//                        estado = pila.peek();
-//                        c++;
-//                        System.out.println("Condicional1");
-//                    } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R1")) {
-//                        pila.pop();
-//                        pila.pop();
-//                        pila.pop();
-//                        estado = pila.peek();
-//                        for (int k = 0; k < ir_A.length; k++) {
-//                            for (int l = 0; l < ir_A[k].length; l++) {
-//                                if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("E")) {
-//                                    valor_pila = ir_A[i][2];
-//                                    pila.push(valor_pila);
+//
+//                    while (c != lista_caracteres.length) {
+//
+//                        if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c])) {
+//
+//                            valor_pila = accion[i][2];
+//                            pila.push(valor_pila);
+//                            estado = pila.peek();
+//
+//                            c++;
+//
+//                        } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R1")) {
+//                            pila.pop();
+//                            pila.pop();
+//                            pila.pop();
+//                            estado = pila.peek();
+//                            for (int k = 0; k < ir_A.length; k++) {
+//                                for (int l = 0; l < ir_A[k].length; l++) {
+//                                    if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("E")) {
+//                                        valor_pila = ir_A[i][2];
+//                                        pila.push(valor_pila);
+//                                    }
 //                                }
 //                            }
-//                        }
-//                        System.out.println("Condicional2");
-//                    } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R2")) {
-//                        pila.pop();
-//                        estado = pila.peek();
-//                        for (int k = 0; k < ir_A.length; k++) {
-//                            for (int l = 0; l < ir_A[k].length; l++) {
-//                                if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("E")) {
-//                                    valor_pila = ir_A[i][2];
-//                                    pila.push(valor_pila);
+//                            System.out.println("Condicional2");
+//                        } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R2")) {
+//                            pila.pop();
+//                            estado = pila.peek();
+//                            for (int k = 0; k < ir_A.length; k++) {
+//                                for (int l = 0; l < ir_A[k].length; l++) {
+//                                    if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("E")) {
+//                                        valor_pila = ir_A[i][2];
+//                                        pila.push(valor_pila);
+//                                    }
 //                                }
 //                            }
-//                        }
-//                        System.out.println("Condicional3");
-//                    } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R3")) {
-//                        pila.pop();
-//                        pila.pop();
-//                        pila.pop();
-//                        estado = pila.peek();
-//                        for (int k = 0; k < ir_A.length; k++) {
-//                            for (int l = 0; l < ir_A[k].length; l++) {
-//                                if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("T")) {
-//                                    valor_pila = ir_A[i][2];
-//                                    pila.push(valor_pila);
+//                            System.out.println("Condicional3");
+//                        } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R3")) {
+//                            pila.pop();
+//                            pila.pop();
+//                            pila.pop();
+//                            estado = pila.peek();
+//                            for (int k = 0; k < ir_A.length; k++) {
+//                                for (int l = 0; l < ir_A[k].length; l++) {
+//                                    if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("T")) {
+//                                        valor_pila = ir_A[i][2];
+//                                        pila.push(valor_pila);
+//                                    }
 //                                }
 //                            }
-//                        }
-//                        System.out.println("Condicional4");
-//                    } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R4")) {
-//                        pila.pop();
-//                        estado = pila.peek();
-//                        for (int k = 0; k < ir_A.length; k++) {
-//                            for (int l = 0; l < ir_A[k].length; l++) {
-//                                if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("T")) {
-//                                    valor_pila = ir_A[i][2];
-//                                    pila.push(valor_pila);
+//                            System.out.println("Condicional4");
+//                        } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R4")) {
+//                            pila.pop();
+//                            estado = pila.peek();
+//                            for (int k = 0; k < ir_A.length; k++) {
+//                                for (int l = 0; l < ir_A[k].length; l++) {
+//                                    if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("T")) {
+//                                        valor_pila = ir_A[i][2];
+//                                        pila.push(valor_pila);
+//                                    }
 //                                }
 //                            }
-//                        }
-//                        System.out.println("Condicional5");
-//                    } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R5")) {
-//                        pila.pop();
-//                        pila.pop();
-//                        pila.pop();
-//                        estado = pila.peek();
-//                        for (int k = 0; k < ir_A.length; k++) {
-//                            for (int l = 0; l < ir_A[k].length; l++) {
-//                                if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("F")) {
-//                                    valor_pila = ir_A[i][2];
-//                                    pila.push(valor_pila);
+//                            System.out.println("Condicional5");
+//                        } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R5")) {
+//                            pila.pop();
+//                            pila.pop();
+//                            pila.pop();
+//                            estado = pila.peek();
+//                            for (int k = 0; k < ir_A.length; k++) {
+//                                for (int l = 0; l < ir_A[k].length; l++) {
+//                                    if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("F")) {
+//                                        valor_pila = ir_A[i][2];
+//                                        pila.push(valor_pila);
+//                                    }
 //                                }
 //                            }
-//                        }
-//                        System.out.println("Condicional6");
-//                    } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R6")) {
-//                        pila.pop();
-//                        estado = pila.peek();
-//                        for (int k = 0; k < ir_A.length; k++) {
-//                            for (int l = 0; l < ir_A[k].length; l++) {
-//                                if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("F")) {
-//                                    valor_pila = ir_A[i][2];
-//                                    pila.push(valor_pila);
+//                            System.out.println("Condicional6");
+//                        } else if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("R6")) {
+//                            pila.pop();
+//                            estado = pila.peek();
+//                            for (int k = 0; k < ir_A.length; k++) {
+//                                for (int l = 0; l < ir_A[k].length; l++) {
+//                                    if (ir_A[i][0].equals(estado) && ir_A[i][1].equals("F")) {
+//                                        valor_pila = ir_A[i][2];
+//                                        pila.push(valor_pila);
+//                                    }
 //                                }
 //                            }
+//                            System.out.println("Condicional7");
+//                        } else {
+//
+//                            if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("acc")) {
+//                                stop = false;
+//                                System.out.println("Analisis sintactico terminado con exito!");
+//                                System.out.println("FINAL");
+//                                System.out.println(estado);
+//                                pila.mostrar();
+//                                stop = false;
+//                            }
+//
 //                        }
-//                        System.out.println("Condicional7");
-//                    } else {
-//                        if (accion[i][0].equals(estado) && accion[i][1].equals(lista_caracteres[c]) && accion[i][2].equals("acc")) {
-//                            System.out.println("Analisis sintactico terminado con exito!");
-//                        }
-//                        System.out.println("FINAL");
-//                        System.out.println(estado);
-//                        pila.mostrar();
+//
 //                    }
+//
+//                    stop = false;
+//                    break;
+//
+//
 //                }
+//
 //            }
-
+//
 //        }
 
 
@@ -334,7 +680,8 @@ public class sintactico {
 
          */
 
-    }
-}
+
+
+
 
 
