@@ -1,11 +1,5 @@
 package sintactico;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static analizador.metodos.RecorrerEspaciosBn;
@@ -14,9 +8,11 @@ import static analizador.metodos.leerArchivo;
 public class sintactico {
 
     public static void main(String[] args) throws IOException {
-        Scanner sr = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         String [][] accion = new String[36][3]; // Tabla Accion
         String [][] ir_A = new String[9][3]; // Tabla ir_A
+        int c = 0;
+        String estado = "0";
 
         // R1 -> E -> E + T
         // R2 -> E -> T
@@ -72,71 +68,39 @@ public class sintactico {
         ir_A[7][0] = "6"; ir_A[7][1] = "F"; ir_A[7][2] = "3";
         ir_A[8][0] = "7"; ir_A[8][1] = "F"; ir_A[8][2] = "10";
 
-        Stack pila = new Stack();
-        int e = 0;
-        String r = "";
-        String fin = "";
-        int s = 0;
-        String text = sr.nextLine();
-        String lec_archivo = leerArchivo("analizador\\exe.txt");
-        char[] stri = text.toCharArray();
-        if (text == "") {
-            text = "_";
-        }
-        String[] caracter = RecorrerEspaciosBn(stri, lec_archivo);
-        while (s != caracter.length) {
-            pila.push(e);
-            for (int i = 0; i < accion.length; i++) {
-                for (int j = 0; j < accion[i].length; j++) {
-                    if (accion[i][j].equals(e) && accion[i][j].equals(s)){
-                        e = Integer.parseInt(String.valueOf(accion[i][j+1]));
-                        pila.push(e);
-                        s++;
-                    } else {
-                        if (accion[i][j].equals(e) && accion[i][j].equals(s)){
-                            r = accion[i][j+1];
-                            if(r=="R1"){
-                                pila.pop();
-                                pila.pop();
-                                pila.pop();
-                            } else {
-                                if(r=="R2"){
-                                    pila.pop();
-                                }else{
-                                    if(r=="R3"){
-                                        pila.pop();
-                                        pila.pop();
-                                        pila.pop();
-                                    }else{
-                                        if(r=="R4"){
-                                            pila.pop();
-                                        }else{
-                                            if(r=="R5"){
-                                                pila.pop();
-                                                pila.pop();
-                                                pila.pop();
-                                            }else{
-                                                if(r=="R6"){
-                                                    pila.pop();
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }else{
-                            if (accion[i][j].equals(e) && accion[i][j].equals(s)){
-                                fin = accion[i][j+1];
-                                if(fin == "acc"){
-                                    System.out.println("Analisis sintactico terminado");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        System.out.println("===============Analizador Sintactico=============");
+        System.out.println("          Bryan Rodriguez - Fabian Soto          ");
+        System.out.println("-------------------------------------------------");
+        String text = sc.nextLine();
+
+        Metodos m = new Metodos(accion, ir_A);
+
+        String lec_archivo = m.leerArchivo("C:\\Users\\sotof\\Desktop\\CompiladorLexicoSintactico\\FinalAnalizadorLexico" +
+                "\\untitled\\src\\analizador\\exe.txt");
+        char[] cadena_token = text.toCharArray(); //Se tranformar a un ARRAY de CARACTERES
+
+        String [] lista_caracteres = m.recorrerEspaciosBn(cadena_token, lec_archivo);
+
+
+        Stack pila = new Stack(); // PILAAAA
+
+
+        System.out.println("***************************************");
+        pila.push(estado);
+        pila.mostrar();
+        System.out.println("****************************************");
+
+        while (c != lista_caracteres.length) {
+
+
+
 
         }
+
+
+
+
+        /*
 
         //Mostrar por pantalla los valores que contiene la matriz
 
@@ -161,27 +125,9 @@ public class sintactico {
             System.out.println();
         }
 
-    }
-    public static String leerArchivo (String archivo) throws FileNotFoundException, IOException {
-        Path path = Paths.get(archivo);
-        File doc =new File(archivo);
-        Scanner obj=new Scanner(doc);
-        String content="";
-        try {
-            content = Files.readString(path);
-            System.out.println(content);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
 
-        while (obj.hasNextLine()){
-            System.out.println(obj.nextLine());
-        }
-        return content;
+         */
+
     }
-    public static String[] RecorrerEspaciosBn(char[] a,String b) {
-        String palabra = "";
-        String[] espacio = b.split(" ");
-        return espacio;
-    }
+
 }

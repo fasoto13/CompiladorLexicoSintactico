@@ -2,12 +2,12 @@ package sintactico;
 
 class Nodo{
 
-    int valor;
+    String valor;
     Nodo siguiente;
 
     //Constructor de la Estructura
 
-    Nodo (int valor) {
+    Nodo (String valor) {
 
         this.valor = valor;
     }
@@ -22,7 +22,7 @@ public class Stack {
 
     // Metodo para insertar un valor a la pila
 
-    public void push(int valor){
+    public void push(String valor){
 
         Nodo nuevo = new Nodo(valor);
 
@@ -54,7 +54,7 @@ public class Stack {
 
     // Metodo para mostrar el primer elemento de la pila (retorna el valor)
 
-    public int peek(){
+    public String peek(){
 
         if (pila != null){ // Verificamos que la pila no este vacia
 
@@ -63,7 +63,7 @@ public class Stack {
 
         }
 
-        return 0; // en caso de estar vacia es 0
+        return ""; // en caso de estar vacia es 0
 
     }
 

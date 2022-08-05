@@ -16,13 +16,28 @@ public class analizador {
         int estado = 1;
         int c = 0;
         String text = sr.nextLine();
+
         String lec_archivo = leerArchivo("C:\\Users\\sotof\\Desktop\\CompiladorLexicoSintactico\\FinalAnalizadorLexico" +
                 "\\untitled\\src\\analizador\\exe.txt");
         char[] stri = text.toCharArray();
-        if (text == "") {
-            text = "_";
+
+        System.out.println("===============================================");
+        System.out.println(stri);
+        System.out.println("===============================================");
+
+        String [] caracter = RecorrerEspaciosBn(stri, lec_archivo);
+
+        System.out.println("===============================================");
+        while (c != caracter.length) {
+
+            System.out.println(caracter[c]);
+
+            c = c + 1;
         }
-        String[] caracter = RecorrerEspaciosBn(stri, lec_archivo);
+
+        System.out.println(caracter.length);
+        System.out.println("===============================================");
+
         while (c != caracter.length) {
 
             switch (estado) {
